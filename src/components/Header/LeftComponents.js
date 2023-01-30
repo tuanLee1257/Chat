@@ -1,12 +1,15 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 import Feather from "react-native-vector-icons/Feather";
 import Search from "../UI/Search";
 
-function LeftComponents(props) {
+function LeftComponents({ ...props }) {
   return (
-    <View style={[{ flexDirection: "row" }, styles.container]}>
+    <TouchableOpacity
+      style={[{ flexDirection: "row" }, styles.container]}
+      {...props}
+    >
       <Feather
         name="search"
         size={24}
@@ -14,7 +17,7 @@ function LeftComponents(props) {
         style={{ alignSelf: "center" }}
       />
       <Search />
-    </View>
+    </TouchableOpacity>
   );
 }
 

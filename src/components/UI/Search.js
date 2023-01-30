@@ -4,7 +4,7 @@ import { View, StyleSheet, Text } from "react-native";
 function Search(props) {
   return (
     <View style={styles.container}>
-      <Text style={{ color: "white" }}>Search</Text>
+      <Text style={{ color: "white", fontSize: 18 }}>Search</Text>
     </View>
   );
 }

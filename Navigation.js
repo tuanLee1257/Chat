@@ -17,6 +17,7 @@ import { auth, database } from "./src/firebase/firebaseConfig";
 import Chat from "./src/screens/Chat";
 import Home from "./src/screens/Home";
 import Login from "./src/screens/Login";
+import Search from "./src/screens/Search";
 import Signup from "./src/screens/Signup";
 import Colors from "./src/values/Colors";
 const Stack = createStackNavigator();
@@ -42,6 +43,7 @@ function ChatStack() {
     >
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 }

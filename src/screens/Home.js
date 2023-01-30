@@ -14,7 +14,10 @@ function Home({}) {
   useEffect(() => {
     navigation.setOptions({
       headerLargeTitle: true,
-      headerLeft: () => <LeftComponents />,
+      title: false,
+      headerLeft: () => (
+        <LeftComponents onPress={() => navigation.navigate("Search")} />
+      ),
     });
   }, [navigation]);
 

@@ -9,7 +9,6 @@ import {
 import React, {
   useCallback,
   useContext,
-  useEffect,
   useState,
   useLayoutEffect,
 } from "react";
