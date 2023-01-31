@@ -1,17 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  collection,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React, { useContext, useState, useEffect } from "react";
 import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import LeftComponents from "./src/components/Header/LeftComponents";
 import { AuthenticatedUserContext } from "./src/config/context";
 import { auth, database } from "./src/firebase/firebaseConfig";
 import Chat from "./src/screens/Chat";

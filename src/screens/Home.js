@@ -3,9 +3,10 @@ import { Image, View, StyleSheet, Text } from "react-native";
 import { AuthenticatedUserContext } from "../config/context";
 import { database } from "../firebase/firebaseConfig";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import LeftComponents from "../components/Header/LeftComponents";
 import { useNavigation } from "@react-navigation/native";
+
 function Home({}) {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [contacts, setContacts] = useState([]);
@@ -50,10 +51,6 @@ function Home({}) {
 
   return (
     <>
-      {/* <Header
-        leftComponent={<LeftComponents />}
-        rightComponent={{ icon: "home", color: "#fff" }}
-      /> */}
       {contacts.map((contact, index) => (
         <Contact contact={contact} key={index} navigation={navigation} />
       ))}
