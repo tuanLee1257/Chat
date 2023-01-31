@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   collection,
   onSnapshot,
@@ -11,20 +12,28 @@ import React, {
   useContext,
   useState,
   useLayoutEffect,
+  useEffect,
 } from "react";
-import { View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
+import BackButton from "../components/UI/BackButton";
 import { AuthenticatedUserContext } from "../config/context";
 import { database } from "../firebase/firebaseConfig";
 
 function Chat({ route }) {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [messages, setMessages] = useState([]);
+  const navigation = useNavigation();
   const contact = route.params.contact;
 
   useLayoutEffect(() => {
     getMessages();
   }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+    });
+  });
 
   const getMessages = () => {
     const collectionRef = collection(
@@ -60,10 +69,18 @@ function Chat({ route }) {
       .doc();
     setDoc(messageDoc, messages[0]);
   }, []);
+
   return (
     <GiftedChat
       messages={messages}
       onSend={(messages) => onSendMessage(messages)}
+      messagesContainerStyle={{
+        backgroundColor: "#fff",
+      }}
+      textInputStyle={{
+        backgroundColor: "#fff",
+        borderRadius: 20,
+      }}
       user={{
         _id: user.uid,
         avatar: user.profile_picture,

@@ -6,6 +6,7 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { TouchableOpacity } from "react-native";
 import LeftComponents from "../components/Header/LeftComponents";
 import { useNavigation } from "@react-navigation/native";
+import PlusButton from "../components/UI/PlusButton";
 
 function Home({}) {
   const { user, setUser } = useContext(AuthenticatedUserContext);
@@ -19,6 +20,9 @@ function Home({}) {
       headerLeft: () => (
         <LeftComponents onPress={() => navigation.navigate("Search")} />
       ),
+      headerRight: () => {
+        <PlusButton />;
+      },
     });
   }, [navigation]);
 
@@ -84,17 +88,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     alignItems: "center",
-    backgroundColor: "white",
-    marginVertical: 10,
-    padding: 10,
+    marginVertical: 5,
+    paddingHorizontal: 10,
   },
   textView: {
     marginLeft: 10,
   },
   image: {
-    height: 50,
-    width: 50,
-    borderRadius: 30,
+    height: 70,
+    width: 70,
+    borderRadius: 35,
     borderWidth: 1.5,
     borderColor: "green",
   },

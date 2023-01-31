@@ -1,14 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  setDoc,
-  startAt,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { TextInput, View, StyleSheet, Text, Image } from "react-native";
 import BackButton from "../components/UI/BackButton";
@@ -16,6 +7,8 @@ import { database, initFirebase } from "../firebase/firebaseConfig";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity } from "react-native";
 import { AuthenticatedUserContext } from "../config/context";
+import { addContact } from "../firebase/contacts";
+import SearchBox from "../components/UI/SearchBox";
 
 function Search(props) {
   const navigation = useNavigation();
@@ -32,11 +25,8 @@ function Search(props) {
       },
       headerLeft: () => (
         <View style={{ flexDirection: "row" }}>
-          <BackButton onPress={() => navigation.goBack()} />
-          <SearchBox
-            styles={{ flex: 1 }}
-            onChangeText={(text) => setName(text)}
-          />
+          <BackButton />
+          <SearchBox onChangeText={(text) => setName(text)} />
         </View>
       ),
     });
@@ -65,22 +55,11 @@ function Search(props) {
     }
   }, [name]);
 
-  const addContact = (contact, user) => {
-    const collectionRef = collection(database, "contacts");
-
-    setDoc(collectionRef, {
-      image: contact.profile_picture,
-      name: contact.username,
-      member: [contact.uid, user.uid],
-      createAt: initFirebase.firestore.FieldValue.serverTimestamp(),
-    });
-  };
-
   if (availableContact != null) {
     return (
       <View>
         {availableContact.map((contact, index) => (
-          <RenderUser contact={contact} key={index} />
+          <RenderUser contact={contact} key={index} user={user} />
         ))}
       </View>
     );
@@ -94,48 +73,24 @@ function Search(props) {
 
 export default Search;
 
-function SearchBox({ ...props }) {
-  return (
-    <View style={{ flexDirection: "row" }}>
-      <TextInput
-        style={styles.searchBox}
-        placeholder="Search"
-        placeholderTextColor="gray"
-        {...props}
-      />
-    </View>
-  );
-}
-
-function RenderUser({ contact, ...props }) {
+function RenderUser({ contact, user }) {
   return (
     <View style={styles.usercontainer}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Image source={{ uri: contact.profile_picture }} style={styles.image} />
         <Text style={styles.name}>{contact.username}</Text>
       </View>
-      <TouchableOpacity style={{}}>
+      <TouchableOpacity onPress={() => addContact(contact, user)}>
         <Ionicons name="add" size={36} />
       </TouchableOpacity>
     </View>
-    // <View>
-    //   <Text>heelo</Text>
-    // </View>
   );
 }
 
 const styles = StyleSheet.create({
-  searchBox: {
-    backgroundColor: "white",
-    borderRadius: 7,
-    width: 300,
-    paddingLeft: 10,
-  },
   usercontainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 1,
-    backgroundColor: "white",
     padding: 10,
     justifyContent: "space-between",
   },

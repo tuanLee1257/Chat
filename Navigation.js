@@ -27,6 +27,7 @@ function ChatStack() {
     <Stack.Navigator
       defaultScreenOptions={Home}
       screenOptions={{
+        title: false,
         headerStyle: { backgroundColor: Colors.header },
         headerSearchBarOptions: {
           // search bar options
